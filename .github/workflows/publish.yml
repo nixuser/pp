@@ -1,0 +1,46 @@
+
+name: Simple page
+
+on:
+  push:
+    branches:
+      - main  # Replace with your desired branch
+
+jobs:
+
+  run-tests:
+    name: Run Robot Framework tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run tests
+      run: mkdir ./results
+      run: echo test > ./results/index.html
+
+    - name: Publish test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: results/
+
+  deploy-to-github-pages:
+    name: Deploy to GitHub Pages
+    needs: run-tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download test results
+      uses: actions/download-artifact@v3
+      with:
+        name: test-results
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./results
