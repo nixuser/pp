@@ -9,15 +9,19 @@ on:
 jobs:
 
   run-tests:
-    name: Run Robot Framework tests
+    name: Create some content
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Run tests
-      run: cp -R ./docs ./results/
+    - name: Create directory
       run: mkdir ./results
+
+    - name: Copy content
+      run: cp -R ./docs ./results/
+
+    - name: Generate content file
       run: echo test > ./results/index.html
 
     - name: Publish test results
