@@ -22,7 +22,7 @@ jobs:
       run: cp -R ./docs ./results/
 
     - name: Generate content file
-      run: echo test > ./results/index.html
+      run: echo test test test > ./results/index.html
 
     - name: Publish test results
       uses: actions/upload-artifact@v4
